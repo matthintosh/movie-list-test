@@ -1,5 +1,5 @@
 import { Resolver,Query, Args, ResolveField, Parent } from "@nestjs/graphql";
-import { Movie } from "./generated/movie";
+import { Movie } from "../generated/movie";
 import { MovieService } from "./movie.service";
 
 @Resolver("Movie")

@@ -1,15 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { Credits, Image, Movie } from './generated/movie';
+import { Credits, Image, Movie } from '../generated/movie';
+import { MOVIES_ENDPOINT, TMDB_BEARER_TOKEN, MOVIE_DETAIL_ENDPOINT, MOVIE_CREDIT_ENDPOINT, MOVIE_IMAGES_ENDPOINT } from './movie.endpoints';
 
-const MOVIES_ENDPOINT = 'https://api.themoviedb.org/3/movie/now_playing';
-const MOVIE_DETAIL_ENDPOINT = 'https://api.themoviedb.org/3/movie/';
-const MOVIE_CREDIT_ENDPOINT =
-  'https://api.themoviedb.org/3/movie/{movie_id}/credits';
-const MOVIE_IMAGES_ENDPOINT =
-  'https://api.themoviedb.org/3/movie/{movie_id}/images';
-
-const TMDB_BEARER_TOKEN =
-  'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5ZDRmMmY5NDc1MGQyYWJjZjUxYWY0ZDFmZmU1YWZjNiIsInN1YiI6IjVhYTExN2Q5MGUwYTI2NDRkZDAwNTY1NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ldzVIjGOPD2ywHVpoJ75QJRGBi-3iG0gaOiAbIoAqWU';
 
 
 @Injectable()
