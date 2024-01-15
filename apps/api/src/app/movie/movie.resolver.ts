@@ -10,6 +10,7 @@ export class MovieResolver {
   async movies(){
     return this.movieService.getMovies();
   }
+  @Query()
    async movie(@Args("id") id:string){
     return this.movieService.getMovie(id);
   }
@@ -20,7 +21,8 @@ export class MovieResolver {
     return this.movieService.getMovieCredits(id);
 
   }
-  async image(@Parent() movie:Movie){
+  @ResolveField()
+  async images(@Parent() movie:Movie){
     const {id} = movie
     return this.movieService.getMovieImages(id);
   }

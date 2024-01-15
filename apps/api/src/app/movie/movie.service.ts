@@ -19,6 +19,7 @@ export class MovieService {
   }
 
   async getMovie(id: string): Promise<Movie> {
+    console.debug(id);
     const movieDetailResponse = await fetch(`${MOVIE_DETAIL_ENDPOINT}${id}`, {
       headers: { Authorization: `Bearer ${TMDB_BEARER_TOKEN}` },
     });
