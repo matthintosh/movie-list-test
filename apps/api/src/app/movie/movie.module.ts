@@ -11,7 +11,7 @@ import { MovieService } from './movie.service';
       driver: ApolloDriver,
       typePaths: ['./**/*.graphql'],
       definitions: {
-        path: join(process.cwd(), 'apps/api/src/app/generated/movie.ts'),
+        path: join(process.cwd(), './movie/generated/movie.ts'),
       },
     }),
   ],

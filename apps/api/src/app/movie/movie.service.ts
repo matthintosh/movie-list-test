@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Credits, Image, Movie } from '../generated/movie';
+import { Credits, Image, Movie } from './generated/movie';
 import { MOVIES_ENDPOINT, TMDB_BEARER_TOKEN, MOVIE_DETAIL_ENDPOINT, MOVIE_CREDIT_ENDPOINT, MOVIE_IMAGES_ENDPOINT } from './movie.endpoints';
 
 
