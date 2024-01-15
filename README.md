@@ -4,6 +4,11 @@
 
 ✨ **This is the default workspace to start coding the movie list** ✨
 
+## Installation
+
+You must have node + npm installed on your computer.
+Run `npm install`
+
 
 ## Start the app
 
