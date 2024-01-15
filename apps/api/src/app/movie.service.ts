@@ -1,0 +1,66 @@
+import { Injectable } from '@nestjs/common';
+import { Credits, Image, Movie } from './generated/movie';
+
+const MOVIES_ENDPOINT = 'https://api.themoviedb.org/3/movie/now_playing';
+const MOVIE_DETAIL_ENDPOINT = 'https://api.themoviedb.org/3/movie/';
+const MOVIE_CREDIT_ENDPOINT =
+  'https://api.themoviedb.org/3/movie/{movie_id}/credits';
+const MOVIE_IMAGES_ENDPOINT =
+  'https://api.themoviedb.org/3/movie/{movie_id}/images';
+
+const TMDB_BEARER_TOKEN =
+  'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5ZDRmMmY5NDc1MGQyYWJjZjUxYWY0ZDFmZmU1YWZjNiIsInN1YiI6IjVhYTExN2Q5MGUwYTI2NDRkZDAwNTY1NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ldzVIjGOPD2ywHVpoJ75QJRGBi-3iG0gaOiAbIoAqWU';
+
+
+@Injectable()
+export class MovieService {
+  async getMovies(): Promise<Movie[]> {
+    const movieResponse = await fetch(MOVIES_ENDPOINT, {
+      headers: { Authorization: `Bearer ${TMDB_BEARER_TOKEN}` },
+    });
+
+    if (!movieResponse.ok) {
+      throw new Error('Something went wrong on movies query');
+    }
+    const { results } = (await movieResponse.json()) as { results };
+    return results as Movie[];
+  }
+
+  async getMovie(id: string): Promise<Movie> {
+    const movieDetailResponse = await fetch(`${MOVIE_DETAIL_ENDPOINT}${id}`, {
+      headers: { Authorization: `Bearer ${TMDB_BEARER_TOKEN}` },
+    });
+    if (!movieDetailResponse.ok) {
+      throw new Error('Something went wrong on movie by Id query');
+    }
+    const movie: Movie = (await movieDetailResponse.json()) as Movie;
+    return movie;
+  }
+
+  async getMovieCredits(id: string): Promise<Credits> {
+    const movieCreditUrl = MOVIE_CREDIT_ENDPOINT.replace('{movie_id}', id);
+    const movieCreditsResponse = await fetch(movieCreditUrl, {
+      headers: { Authorization: `Bearer ${TMDB_BEARER_TOKEN}` },
+    });
+    if (!movieCreditsResponse.ok) {
+      throw new Error('Something went wrong on movie by Id query');
+    }
+    const movieCredits: Credits = await movieCreditsResponse.json();
+    return movieCredits;
+  }
+
+  async getMovieImages(id: string): Promise<Image> {
+    const movieImagesUrl = MOVIE_IMAGES_ENDPOINT.replace('{movie_id}', id);
+    const movieImagesResponse = await fetch(movieImagesUrl, {
+      headers: { Authorization: `Bearer ${TMDB_BEARER_TOKEN}` },
+    });
+    if (!movieImagesResponse.ok) {
+      throw new Error('Something went wrong on movie by Id query');
+    }
+    const movieImages: Image = await movieImagesResponse.json();
+    movieImages.backdrops = movieImages.backdrops.filter(
+      (backdrop) => backdrop.iso_639_1 === null
+    );
+    return movieImages;
+  }
+}
