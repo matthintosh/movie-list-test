@@ -6,10 +6,17 @@ import { MOVIES_ENDPOINT, TMDB_BEARER_TOKEN, MOVIE_DETAIL_ENDPOINT, MOVIE_CREDIT
 
 @Injectable()
 export class MovieService {
+
+  private requestInit:RequestInit;
+
+  constructor(){
+   this.requestInit = {
+     headers: { Authorization: `Bearer ${TMDB_BEARER_TOKEN}` },
+   };
+  }
+
   async getMovies(): Promise<Movie[]> {
-    const movieResponse = await fetch(MOVIES_ENDPOINT, {
-      headers: { Authorization: `Bearer ${TMDB_BEARER_TOKEN}` },
-    });
+    const movieResponse = await fetch(MOVIES_ENDPOINT, this.requestInit);
 
     if (!movieResponse.ok) {
       throw new Error('Something went wrong on movies query');
@@ -19,9 +26,10 @@ export class MovieService {
   }
 
   async getMovie(id: string): Promise<Movie> {
-    const movieDetailResponse = await fetch(`${MOVIE_DETAIL_ENDPOINT}${id}`, {
-      headers: { Authorization: `Bearer ${TMDB_BEARER_TOKEN}` },
-    });
+    const movieDetailResponse = await fetch(
+      `${MOVIE_DETAIL_ENDPOINT}${id}`,
+      this.requestInit
+    );
     if (!movieDetailResponse.ok) {
       throw new Error('Something went wrong on movie by Id query');
     }
@@ -31,9 +39,7 @@ export class MovieService {
 
   async getMovieCredits(id: string): Promise<Credits> {
     const movieCreditUrl = MOVIE_CREDIT_ENDPOINT.replace('{movie_id}', id);
-    const movieCreditsResponse = await fetch(movieCreditUrl, {
-      headers: { Authorization: `Bearer ${TMDB_BEARER_TOKEN}` },
-    });
+    const movieCreditsResponse = await fetch(movieCreditUrl, this.requestInit);
     if (!movieCreditsResponse.ok) {
       throw new Error('Something went wrong on movie by Id query');
     }
@@ -43,9 +49,7 @@ export class MovieService {
 
   async getMovieImages(id: string): Promise<Image> {
     const movieImagesUrl = MOVIE_IMAGES_ENDPOINT.replace('{movie_id}', id);
-    const movieImagesResponse = await fetch(movieImagesUrl, {
-      headers: { Authorization: `Bearer ${TMDB_BEARER_TOKEN}` },
-    });
+    const movieImagesResponse = await fetch(movieImagesUrl, this.requestInit);
     if (!movieImagesResponse.ok) {
       throw new Error('Something went wrong on movie by Id query');
     }
