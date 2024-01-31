@@ -6,6 +6,8 @@
 
 ## Installation
 
+Required : Node version 21 at least
+
 You must have node + npm installed on your computer.
 Run `npm install`
 
